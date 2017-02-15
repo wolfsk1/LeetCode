@@ -164,6 +164,57 @@ namespace LeetCode
             }
             return result;
         }
-
+        /// <summary>
+        /// 485. Max Consecutive Ones 
+        /// </summary>
+        public int FindMaxConsecutiveOnes(int[] nums)
+        {
+            int max = -1;
+            int record = 0;
+            for (int i = 0; i < nums.Length; i++)
+            {
+                int num = nums[i];
+                if (num == 1)
+                {
+                    record++;
+                    if (i == nums.Length - 1)
+                    {
+                        max = Math.Max(record, max);
+                    }
+                }
+                else
+                {
+                    max = Math.Max(record, max);
+                    record = 0;
+                }
+            }
+            return max;
+        }
+        /// <summary>
+        /// 292. Nim Game 
+        /// </summary>
+        public bool CanWinNim(int n)
+        {
+            return n % 4 != 0;
+        }
+        /// <summary>
+        /// 448. Find All Numbers Disappeared in an Array 
+        /// </summary>
+        public IList<int> FindDisappearedNumbers(int[] nums)
+        {
+            List<int> result = new List<int>();
+            for (int i = 0; i < nums.Length; i++)
+            {
+                nums[(nums[i] - 1 )% nums.Length] += nums.Length;
+            }
+            for (int i = 0; i < nums.Length; i++)
+            {
+                if (nums[i] <= nums.Length)
+                {
+                    result.Add(i + 1);
+                }
+            }
+            return result;
+        }
     }
 }
