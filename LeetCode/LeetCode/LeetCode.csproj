@@ -43,7 +43,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Solution.cs" />
+    <Compile Include="CodeFights.cs" />
+    <Compile Include="MyTest.cs" />
+    <Compile Include="LeetCode.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

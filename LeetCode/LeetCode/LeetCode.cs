@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace LeetCode
 {
-    public class Solution
+    public class LeetCode
     {
         /// <summary>
         /// 461. Hamming Distance 
