@@ -10,16 +10,18 @@ namespace LeetCode
     {
         static void Main(string[] args)
         {
-            Random ran = new Random();
-            for (int j = 0; j <= 10; j++)
-            {
-                var ta = MyTest.GetRandomList(100, 5, 10, 2, ran);
-                for (int i = 0; i < ta.Length; i++)
-                {
-                    Console.Write(ta[i]+" ");
-                }
-                Console.WriteLine();
-            }
+            Console.Write(CodeFights.fileNaming(new []{"a(1)",
+ "a(6)",
+ "a",
+ "a",
+ "a",
+ "a",
+ "a",
+ "a",
+ "a",
+ "a",
+ "a",
+ "a"}));
             Console.ReadLine();
             Console.ReadLine();
         }

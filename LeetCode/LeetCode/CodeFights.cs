@@ -1,8 +1,10 @@
 ﻿
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data.SqlTypes;
 using System.Globalization;
+using System.Linq;
 using System.Runtime.Remoting.Messaging;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
@@ -19,7 +21,7 @@ namespace LeetCode
             int max = -1001;
             for (int i = 0; i < inputArray.Length - 1; i++)
             {
-                int reult = inputArray[i]*inputArray[i + 1];
+                int reult = inputArray[i] * inputArray[i + 1];
                 max = Math.Max(reult, max);
             }
             return max;
@@ -141,10 +143,10 @@ namespace LeetCode
             List<int> nums = new List<int>();
             while (n > 0)
             {
-                nums.Add(n%10);
+                nums.Add(n % 10);
                 n /= 10;
             }
-            int halfLength = nums.Count/2;
+            int halfLength = nums.Count / 2;
             int firstHalf = 0;
             int secondHalf = 0;
             for (int i = 0; i < halfLength; i++)
@@ -202,7 +204,7 @@ namespace LeetCode
                 }
                 else if (cas[index] == ')')
                 {
-                    bracketCount --;
+                    bracketCount--;
                     if (bracketCount == 0)
                     {
                         var subString = s.Substring(leftIndex + 1, index - leftIndex - 1);
@@ -218,7 +220,7 @@ namespace LeetCode
                 {
                     sb.Append(cas[index]);
                 }
-                index ++;
+                index++;
             }
             return sb.ToString();
 
@@ -252,7 +254,7 @@ namespace LeetCode
             }
             for (int i = 0; i < B.Length; i++)
             {
-                table[B[i]] --;
+                table[B[i]]--;
                 if (A[i] != B[i])
                 {
                     notEqual++;
@@ -298,7 +300,7 @@ namespace LeetCode
             bool isCenterUse = false;
             for (int i = 0; i < charCount.Length; i++)
             {
-                if (charCount[i]%2 == 1)
+                if (charCount[i] % 2 == 1)
                 {
                     if (isCenterUse)
                     {
@@ -332,7 +334,7 @@ namespace LeetCode
 
         public static bool isIPv4Address(string inputString)
         {
-            string[] ipSingle = inputString.Split(new char[] {'.'}, StringSplitOptions.RemoveEmptyEntries);
+            string[] ipSingle = inputString.Split(new char[] { '.' }, StringSplitOptions.RemoveEmptyEntries);
             if (ipSingle.Length != 4)
             {
                 return false;
@@ -365,7 +367,7 @@ namespace LeetCode
                 bool isBreak = false;
                 for (int j = 0; j < inputArray.Length; j++)
                 {
-                    if (inputArray[j]%i == 0)
+                    if (inputArray[j] % i == 0)
                     {
                         isBreak = true;
                         break;
@@ -387,9 +389,9 @@ namespace LeetCode
                 result[i] = new int[image[0].Length - 2];
                 for (int j = 0; j < result[i].Length; j++)
                 {
-                    result[i][j] = image[i][j] + image[i][j+1] + image[i][j+2] + 
-                                    image[i+1][j] + image[i+1][j+1] + image[i+1][j+2] +
-                                    image[i+2][j] + image[i+2][j+1] + image[i+2][j+2];
+                    result[i][j] = image[i][j] + image[i][j + 1] + image[i][j + 2] +
+                                    image[i + 1][j] + image[i + 1][j + 1] + image[i + 1][j + 2] +
+                                    image[i + 2][j] + image[i + 2][j + 1] + image[i + 2][j + 2];
                     result[i][j] /= 9;
                 }
             }
@@ -444,20 +446,20 @@ namespace LeetCode
         {
             char[] cell1Char = cell1.ToLower().ToCharArray();
             char[] cell2Char = cell2.ToLower().ToCharArray();
-            int cell1Result = (cell1Char[0] + cell1Char[1])%2;
-            int cell2Result = (cell2Char[0] + cell2Char[1])%2;
+            int cell1Result = (cell1Char[0] + cell1Char[1]) % 2;
+            int cell2Result = (cell2Char[0] + cell2Char[1]) % 2;
             return cell2Result == cell1Result;
         }
 
         int depositProfit(int deposit, int rate, int threshold)
         {
-            float trueRate = (100 + rate)/100f;
+            float trueRate = (100 + rate) / 100f;
             float trueDeposit = deposit;
             int year = 0;
             while (trueDeposit < threshold)
             {
                 trueDeposit *= trueRate;
-                year ++;
+                year++;
             }
             return year;
         }
@@ -557,7 +559,7 @@ namespace LeetCode
             char[] ca = inputString.ToCharArray();
             for (int i = 0; i < ca.Length; i++)
             {
-                if(ca[i]>='0'&&ca[i]<='9')
+                if (ca[i] >= '0' && ca[i] <= '9')
                     return ca[i];
             }
             return '0';
@@ -579,7 +581,7 @@ namespace LeetCode
 
         public static string findEmailDomain(string address)
         {
-            Match m =  Regex.Match(address, "@[a-z0-9]+.[a-z0-9]+");
+            Match m = Regex.Match(address, "@[a-z0-9]+.[a-z0-9]+");
             if (m.Success)
             {
                 return m.Value.Substring(1);
@@ -600,9 +602,9 @@ namespace LeetCode
                 if (revCas[0] == cas[node])
                 {
                     int subNode = 0;
-                    while ((subNode + node) < cas.Length&&revCas[subNode] == cas[subNode + node])
+                    while ((subNode + node) < cas.Length && revCas[subNode] == cas[subNode + node])
                     {
-                        subNode ++;
+                        subNode++;
                     }
                     if (subNode + node == cas.Length)
                     {
@@ -615,12 +617,179 @@ namespace LeetCode
                         return sb.ToString();
                     }
                 }
-                node ++;
+                node++;
             }
             return string.Empty;
         }
-        
 
+        int chessKnight(string cell)
+        {
+            int size = 8;
+            int[] offsetX = new[] { 1, 2, 2, 1, -1, -2, -2, -1 };
+            int[] offsetY = new[] { 2, 1, -1, -2, -2, -1, 1, 2 };
+            int ox = cell.ToCharArray()[0] - 'a';
+            int oy = cell.ToCharArray()[1] - '1';
+            int result = 0;
+            for (int i = 0; i < offsetX.Length; i++)
+            {
+                int nx = ox + offsetX[i];
+                int ny = oy + offsetY[i];
+                if (nx >= 0 && nx < size && ny >= 0 && ny < size)
+                {
+                    result++;
+                }
+            }
+            return result;
+        }
 
+        int deleteDigit(int n)
+        {
+            List<int> nums = new List<int>();
+            while (n != 0)
+            {
+                nums.Add(n%10);
+                n /= 10;
+            }
+            int max = int.MinValue;
+            for (int i = 0; i < nums.Count; i++)
+            {
+                int d = 1;
+                int sum = 0;
+                for (int j = 0; j < nums.Count; j++)
+                {
+                    if (j == i)
+                    {
+                        continue;
+                    }
+                    sum += nums[j]*d;
+                    d *= 10;
+                }
+                max = Math.Max(max, sum);
+            }
+            return max;
+        }
+        string longestWord(string text)
+        {
+            MatchCollection mc = Regex.Matches(text, "[a-zA-Z]*");
+            string longestS = String.Empty;
+            for (int i = 0; i < mc.Count; i++)
+            {
+                if (mc[i].Value.Length > longestS.Length)
+                {
+                    longestS = mc[i].Value;
+                }
+            }
+            return longestS;
+        }
+
+        bool validTime(string time)
+        {
+            string[] sa = time.Split(':');
+            int h = int.Parse(sa[0]);
+            int m = int.Parse(sa[1]);
+            return h>=0&&h<24&&m>=0&&m<60;
+        }
+
+        public static int sumUpNumbers(string inputString)
+        {
+            MatchCollection mc = Regex.Matches(inputString, "[0-9]+");
+            int result = 0;
+            for (int i = 0; i < mc.Count; i++)
+            {
+                if (mc[i].Success)
+                {
+                    result += int.Parse(mc[i].Value);
+                }
+            }
+            return result;
+
+        }
+
+        int differentSquares(int[][] matrix)
+        {
+            bool[] flag = new bool[10000];
+            for (int i = 0; i < matrix.Length - 1; i++)
+            {
+                for (int j = 0; j < matrix[i].Length - 1; j++)
+                {
+                    int hash = matrix[i][j]*1000 + matrix[i][j + 1]*100 + matrix[i + 1][j]*10 + matrix[i + 1][j + 1];
+                    flag[hash] = true;
+                }
+            }
+            int result = flag.Count(b => b);
+            return result;
+        }
+
+        int digitsProduct(int product)
+        {
+            if (product == 0)
+            {
+                return 10;
+            }else if (product < 10)
+            {
+                return product;
+            }
+            List<int> nums = new List<int>();
+            bool isHandler = false;
+            while (product > 1)
+            {
+                isHandler = false;
+                for (int i = 9; i > 1; i--)
+                {
+                    if (product % i == 0)
+                    {
+                        isHandler = true;
+                        nums.Add(i);
+                        product /= i;
+                        break;
+                    }
+                }
+                if (!isHandler)
+                {
+                    break;
+                }
+            }
+            if (product > 1)
+            {
+                return -1;
+            }
+            else
+            {
+                nums.Sort();
+                int result = 0;
+                foreach (var num in nums)
+                {
+                    result = result*10 + num;
+                }
+                return result;
+            }
+        }
+
+        public static string[] fileNaming(string[] names)
+        {
+            Dictionary<string, int> files = new Dictionary<string, int>();
+            string[] result = new string[names.Length];
+            for (int i = 0; i < names.Length; i++)
+            {
+                if (files.ContainsKey(names[i]))
+                {
+                    files[names[i]]++;
+                    var newString = string.Format("{0}({1})", names[i], files[names[i]]);
+                    while (files.ContainsKey(newString))
+                    {
+                        files[names[i]]++;
+                        newString = string.Format("{0}({1})", names[i], files[names[i]]);
+                    }
+                    files.Add(newString, 0);
+                    result[i] = newString;
+                }
+                else
+                {
+                    files.Add(names[i], 0);
+                    result[i] = names[i];
+                }
+            }
+            return result;
+        }
     }
 }
