@@ -10,18 +10,7 @@ namespace LeetCode
     {
         static void Main(string[] args)
         {
-            Console.Write(CodeFights.fileNaming(new []{"a(1)",
- "a(6)",
- "a",
- "a",
- "a",
- "a",
- "a",
- "a",
- "a",
- "a",
- "a",
- "a"}));
+            Console.Write(CodeFights.spiralNumbers(3));
             Console.ReadLine();
             Console.ReadLine();
         }

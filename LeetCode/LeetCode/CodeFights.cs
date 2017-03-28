@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Data.SqlTypes;
 using System.Globalization;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Runtime.Remoting.Messaging;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
@@ -271,9 +272,6 @@ namespace LeetCode
 
             return (notEqual == 0) || (notEqual == 2);
         }
-
-        #endregion
-
         public static int ArrayChange(int[] inputArray)
         {
             int result = 0;
@@ -647,7 +645,7 @@ namespace LeetCode
             List<int> nums = new List<int>();
             while (n != 0)
             {
-                nums.Add(n%10);
+                nums.Add(n % 10);
                 n /= 10;
             }
             int max = int.MinValue;
@@ -661,7 +659,7 @@ namespace LeetCode
                     {
                         continue;
                     }
-                    sum += nums[j]*d;
+                    sum += nums[j] * d;
                     d *= 10;
                 }
                 max = Math.Max(max, sum);
@@ -687,7 +685,7 @@ namespace LeetCode
             string[] sa = time.Split(':');
             int h = int.Parse(sa[0]);
             int m = int.Parse(sa[1]);
-            return h>=0&&h<24&&m>=0&&m<60;
+            return h >= 0 && h < 24 && m >= 0 && m < 60;
         }
 
         public static int sumUpNumbers(string inputString)
@@ -712,7 +710,7 @@ namespace LeetCode
             {
                 for (int j = 0; j < matrix[i].Length - 1; j++)
                 {
-                    int hash = matrix[i][j]*1000 + matrix[i][j + 1]*100 + matrix[i + 1][j]*10 + matrix[i + 1][j + 1];
+                    int hash = matrix[i][j] * 1000 + matrix[i][j + 1] * 100 + matrix[i + 1][j] * 10 + matrix[i + 1][j + 1];
                     flag[hash] = true;
                 }
             }
@@ -725,7 +723,8 @@ namespace LeetCode
             if (product == 0)
             {
                 return 10;
-            }else if (product < 10)
+            }
+            else if (product < 10)
             {
                 return product;
             }
@@ -759,7 +758,7 @@ namespace LeetCode
                 int result = 0;
                 foreach (var num in nums)
                 {
-                    result = result*10 + num;
+                    result = result * 10 + num;
                 }
                 return result;
             }
@@ -791,5 +790,104 @@ namespace LeetCode
             }
             return result;
         }
+
+        public static string messageFromBinaryCode(string code)
+        {
+            char[] aa = new char[code.Length / 8];
+            char[] sca = code.ToCharArray();
+            char[] result = new char[code.Length / 8];
+            for (int i = 0; i < aa.Length; i++)
+            {
+                Int32 sum = 0;
+                for (int j = 0; j < 8; j++)
+                {
+                    sum = sum * 2 + sca[i * 8 + j] - '0';
+                }
+                result[i] = (char)sum;
+            }
+            return new string(result);
+
+        }
+        public static int[][] spiralNumbers(int n)
+        {
+            int[] offsetX = new[] { 1, 0, -1, 0 };
+            int[] offsetY = new[] { 0, 1, 0, -1 };
+            int indexOfOffset = 0;
+            int[][] result = new int[n][];
+            for (int i = 0; i < n; i++)
+            {
+                result[i] = new int[n];
+            }
+            int x = 0, y = 0;
+            result[0][0] = 1;
+            int index = 2;
+            while (index <= n * n)
+            {
+                int nx = x + offsetX[indexOfOffset];
+                int ny = y + offsetY[indexOfOffset];
+                if (nx >= 0 && nx < n && ny >= 0 && ny < n && result[ny][nx] == 0)
+                {
+                    result[ny][nx] = index;
+                    index++;
+                    x = nx;
+                    y = ny;
+                }
+                else
+                {
+                    indexOfOffset++;
+                    indexOfOffset %= 4;
+                }
+            }
+            return result;
+        }
+
+        bool sudoku(int[][] grid)
+        {
+            for (int i = 0; i < 9; i++)
+            {
+                int ox = i % 3 * 3;
+                int oy = i / 3 * 3;
+                bool[] flag = new bool[10];
+                bool[] flagCol = new bool[10];
+                bool[] flagRow = new bool[10];
+                for (int j = 0; j < 9; j++)
+                {
+                    int flagNum = grid[oy + j / 3][ox + j % 3];
+                    if (flag[flagNum])
+                    {
+                        return false;
+                    }
+                    else
+                    {
+                        flag[flagNum] = true;
+                    }
+
+                    int flagColNum = grid[j][i];
+                    if (flagCol[flagColNum])
+                    {
+                        return false;
+                    }
+                    else
+                    {
+                        flagCol[flagColNum] = true;
+                    }
+
+                    int flagRowNum = grid[j][i];
+                    if (flagRow[flagRowNum])
+                    {
+                        return false;
+                    }
+                    else
+                    {
+                        flagRow[flagRowNum] = true;
+                    }
+                }
+            }
+            return true;
+        }
+        #endregion
+
+
+
     }
 }
