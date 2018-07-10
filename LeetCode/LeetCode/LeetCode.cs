@@ -6,6 +6,15 @@ namespace LeetCode
 {
     public class LeetCode
     {
+        public LeetCode()
+        {
+            Console.Write("empty");
+        }
+
+        public LeetCode(int a) : this()
+        {
+            Console.Write("par");
+        }
         /// <summary>
         /// 461. Hamming Distance 
         /// </summary>

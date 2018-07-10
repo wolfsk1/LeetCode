@@ -6,6 +6,7 @@ namespace LeetCode
 {
     public class MyTest
     {
+        public int I;
         public static int[] GetRandomList(int totalValue, int userCount, int offset, int a, Random ran)
         {
             int[] result = new int[userCount];

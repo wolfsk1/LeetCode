@@ -59,9 +59,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Child.cs" />
     <Compile Include="CodeFights.cs" />
+    <Compile Include="LeetCodeChina.cs" />
     <Compile Include="MyTest.cs" />
     <Compile Include="LeetCode.cs" />
+    <Compile Include="Root.cs" />
+    <Compile Include="TestStruct.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

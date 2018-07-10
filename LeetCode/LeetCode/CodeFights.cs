@@ -791,5 +791,303 @@ namespace LeetCode
             }
             return result;
         }
+
+        int killKthBit(int n, int k)
+        {
+            int kthMove = 1;
+            kthMove = kthMove << (k - 1);
+            return n == (n | kthMove) ? n - kthMove : n;
+        }
+
+        int mirrorBits(int a)
+        {
+            int result = 0;
+            while (a > 0)
+            {
+                result += a%2;
+                result <<= 1;
+                a /= 2;
+            }
+            return result>>=1;
+        }
+
+        public static int swapAdjacentBits(int n)
+        {
+            //if (n == 0)
+            //{
+            //    return 0;
+            //}
+            //else
+            //{
+            //    int a = (n & 1) << 1;
+            //    int b = (n >> 1) & 1;
+            //    int sum = (a + b);
+            //    int spec = 
+            //    return sum + swapAdjacentBits(n >> 2)<<2;
+            //}
+            return n == 0? 0 : (((n&1)<<1) + ((n>>1)&1)) + (swapAdjacentBits(n>>2)<<2);
+        }
+
+        public static int lineUp(string commands)
+        {
+            int t = 0;
+            int f = 0;
+            int result = 0;
+            char[] cs = commands.ToCharArray();
+            for (int i = 0; i < cs.Length; i++)
+            {
+                t = turn(t, cs[i], false);
+                f = turn(f, cs[i], true);
+                if (t == f)
+                {
+                    result++;
+                }
+            }
+            return result;
+        }
+
+
+        public static void TestChanged(int[] a)
+        {
+            a[0] = 5;
+        }
+        static int turn(int o, char c, bool isF)
+        {
+            int turn = 0;
+            if (c == 'L')
+            {
+                turn = isF ? 1 : -1;
+            }
+            if (c == 'R')
+            {
+                turn = isF ? -1 : 1;
+            }
+            else
+            {
+                turn = 2;
+            }
+            return (o + turn + 4) % 4;
+        }
+        public static int isSumOfConsecutive2(int n)
+        {
+            int result = 0;
+            for (int i = 2; i < n; i++)
+            {
+                int div = n/i;
+                int mod = n%i;
+                if (mod == 0)
+                {
+                    if (div%2 == 0)
+                    {
+                        continue;
+                    }
+                    bool canAvg = (div - 1)/2 <= n;
+                    result = canAvg ? result + 1 : result;
+                }
+                else if(mod * 2 == div)
+                {
+                    result++;
+                }
+            }
+            return result;
+        }
+        
+        public static int squareDigitsSequence(int a0)
+        {
+            // (9*9)*3 = 243; 243 + 1 = 244 ; 650+1 = 651;
+            bool[] judge = new bool[651];
+            judge[a0] = true;
+            bool alreadyHave = false;
+            int result = 1;
+            int currentNumber = a0;
+            while (!alreadyHave)
+            {
+                Console.WriteLine(currentNumber);
+                result++;
+                int sum = 0;
+                while (currentNumber >= 10)
+                {
+                    int d = currentNumber % 10;
+                    currentNumber /= 10;
+                    sum += d * d;
+                }
+                sum += currentNumber * currentNumber;
+                currentNumber = sum;
+                Console.WriteLine(sum);
+                if (judge[sum])
+                {
+                    break;
+                }
+                else
+                {
+                    judge[sum] = true;
+                }
+            }
+
+            return result;
+
+        }
+        
+        public static int pagesNumberingWithInk(int current, int numberOfDigits)
+        {
+            int digtalFormat = 10;
+            int currentInkCost = 1;
+            int result = 0;
+            while (current>=digtalFormat)
+            {
+                digtalFormat *= 10;
+                currentInkCost++;
+            }
+
+            while (numberOfDigits >= currentInkCost)
+            {
+                numberOfDigits -= currentInkCost;
+                result++;
+                
+                current++;
+                if (current >= digtalFormat)
+                {
+                    digtalFormat *= 10;
+                    currentInkCost++;
+                }
+            }
+
+            return current;
+
+        }
+        
+        public static int comfortableNumbers(int l, int r)
+        {
+            int result = 0;
+            for (int i = l; i <= r; i++)
+            {
+                int sumOfDigtal = getSumFromDigtal(i);
+                int right = i + sumOfDigtal;
+                int rightIndex = right > r ? r : right;
+                for (int j = i + 1; j <= rightIndex; j++)
+                {
+                    int jSumDigtal = getSumFromDigtal(j);
+                    if (j - jSumDigtal <= i)
+                    {
+                        result++;
+                    }
+                }
+            }
+
+            return result;
+        }
+
+        private static int getSumFromDigtal(int digtal)
+        {
+            int result = 0;
+            while (digtal >= 10)
+            {
+                result += digtal % 10;
+                digtal /= 10;
+            }
+
+            result += digtal;
+            return result;
+        }
+        
+        public static int[] weakNumbers(int n)
+        {
+            int[] result = new int[2];
+            int[] numberOfDivisors  = new int[n + 1];
+            int mostWeaknessLevel = 0;
+            int mostWeaknessNumber = 1;
+            for (int i = 1; i <= n; i++)
+            {
+                numberOfDivisors[i] = getDivisors(i);
+                int weakness = 0;
+                for (int j = 1; j < i; j++)
+                {
+                    if (numberOfDivisors[j] < numberOfDivisors[i])
+                    {
+                        weakness++;
+                    }
+                }
+
+                if (weakness > mostWeaknessLevel)
+                {
+                    mostWeaknessLevel = weakness;
+                    mostWeaknessNumber = 1;
+                }else if (weakness == mostWeaknessLevel)
+                {
+                    mostWeaknessNumber++;
+                }
+            }
+
+            result[0] = mostWeaknessLevel;
+            result[1] = mostWeaknessNumber;
+            return result;
+        }
+
+        private static int getDivisors(int n)
+        {
+            int result = 0;
+            for (int i = 1; i <= n; i++)
+            {
+                if (n % i == 0)
+                {
+                    result++;
+                }
+            }
+
+            return result;
+        }
+        
+        public static int rectangleRotation(int a, int b)
+        {
+            double sqrt = Math.Sqrt(2);
+            int ap = (int) (a * sqrt / 2)+1;
+            Console.WriteLine(ap);
+            int bp = (int) (b * sqrt / 2)+1;
+            Console.WriteLine(bp);
+            int result = (2 * ap - 1) * (bp - 1) + ap;
+            if (result % 2 == 0)
+            {
+                result--;
+            }
+            return result;
+        }
+        
+        public static int crosswordFormation(string[] words)
+        {
+            char[][] wordChars = new char[4][];
+            int[] selectCharIndex = new int[4];
+            for (int i = 0; i < words.Length; i++)
+            {
+                wordChars[i] = words[i].ToCharArray();
+                selectCharIndex[i] = -1;
+            }
+
+            for (int i = 0; i < wordChars.Length; i++)
+            {
+                for (int j = 0; j < wordChars.Length; j++)
+                {
+                    if(j==i) continue;
+                    for (int k = 0; k < wordChars.Length; k++)
+                    {
+                        if(k == i || k == j) continue;
+                        for (int l = 0; l < wordChars.Length; l++)
+                        {
+                            if (l == i || l == j || l == k) continue;
+                            char[][] finalCp = new char[4][];
+                            
+                        }
+                    }
+                }
+            }
+
+            return 0;
+        }
+
+        private static void getCrosswordDfs(char[][] chars, int[] selectCharIndex, int currentIndex)
+        {
+            
+        }
+
+
     }
 }
