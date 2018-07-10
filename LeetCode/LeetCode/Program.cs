@@ -12,7 +12,7 @@ namespace LeetCode
         static void Main(string[] args)
         {
 
-            uint result = LeetCodeChina.reverseBits(1u);
+            var result = LeetCodeChina.Subsets(new int[]{1,2,3});
             Console.WriteLine(result);
         }
     }

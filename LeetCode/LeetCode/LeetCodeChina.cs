@@ -108,5 +108,60 @@ namespace LeetCode
 
             return true;
         }
+
+        public static IList<IList<int>> Subsets(int[] nums)
+        {
+            IList<IList<int>> result = new List<IList<int>>();
+            int totalResult = 1;
+            for (int i = 0; i < nums.Length; i++)
+            {
+                totalResult >>= 1;
+            }
+
+            for (int i = 0; i < totalResult; i++)
+            {
+                var singleResult = new List<int>();
+                int temp = i;
+                int index = 0;
+                while (temp != 0)
+                {
+                    bool isSelect = (temp & 1) == 1;
+                    if (isSelect)
+                    {
+                        singleResult.Add(nums[index]);
+                    }
+                    index++;
+                    temp >>= 1;
+                }
+                result.Add(singleResult);
+            }
+
+            return result;
+        }
+        
+        public int FindComplement(int num) {
+            int result = 0;
+            int i = 0;
+            while(num!=0){
+                result+=((num&1)^1)<<i;
+                num>>=1;
+                i++;
+            }
+            return result;
+        }
+        public int[] TwoSum(int[] nums, int target) {
+            for(int i = 0;i<nums.Length;i++){
+                for(int j = i+1;j<nums.Length;j++){
+                    if(nums[i]+nums[j] == target){
+                        return new int[]{i,j};
+                    }
+                }
+            }
+            return new int[]{0,0};
+        }
+        // 7
+        public int Reverse(int x) {
+        
+        }
     }
 }
