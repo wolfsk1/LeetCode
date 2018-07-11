@@ -11,9 +11,8 @@ namespace LeetCode
     {
         static void Main(string[] args)
         {
+            LeetCodeChina.Rotate(new int[2]{1,2},1);
 
-            var result = LeetCodeChina.Subsets(new int[]{1,2,3});
-            Console.WriteLine(result);
         }
     }
 }

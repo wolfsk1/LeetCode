@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace LeetCode
 {
@@ -160,8 +161,76 @@ namespace LeetCode
             return new int[]{0,0};
         }
         // 7
-        public int Reverse(int x) {
+        public int Reverse(int x)
+        {
+            return 0;
+        }
         
+        public static int RemoveDuplicates(int[] nums)
+        {
+            if (nums.Length == 0)
+            {
+                return 0;
+            }
+            int realNumIndex = 0;
+            int numsIndex = 0;
+            while (numsIndex < nums.Length-1)
+            {
+                if (nums[numsIndex] != nums[numsIndex + 1])
+                {
+                    nums[realNumIndex] = nums[numsIndex];
+                    realNumIndex++;
+                }
+                numsIndex++;
+            }
+
+            nums[realNumIndex] = nums[numsIndex];
+            return realNumIndex + 1;
+        }
+        
+        public int MaxProfit(int[] prices)
+        {
+            if (prices.Length == 0)
+            {
+                return 0;
+            }
+            int result = 0;
+            int minNum = prices[0];
+            int lastNum = prices[0];
+            for (int i = 1; i < prices.Length; i++)
+            {
+                if (prices[i] < lastNum)
+                {
+                    result += lastNum - minNum;
+                    minNum = prices[i];
+                }
+                lastNum = prices[i];
+            }
+
+            result += lastNum - minNum;
+            return result;
+        }
+        
+        public static void Rotate(int[] nums, int k)
+        {
+            if (nums.Length == 0)
+            {
+                return;
+            }
+            k = k % nums.Length;
+            for (int i = 0; i < nums.Length - 1; i++)
+            {
+                int orginIndex = i - k>=0?i%k:i;
+                int targetIndex = (i + k) % nums.Length;
+                int temp = nums[orginIndex];
+                nums[orginIndex] = nums[targetIndex];
+                nums[targetIndex] = temp;
+            }
+
+            for (int i = 0; i < nums.Length; i++)
+            {
+                Console.WriteLine(nums[i]);
+            }
         }
     }
 }
