@@ -12,7 +12,7 @@ namespace LeetCode
         static void Main(string[] args)
         {
 
-            var result = LeetCodeChina.Subsets(new int[]{1,2,3});
+            var result = LeetCodeChina.Reverse(-321);
             Console.WriteLine(result);
         }
     }

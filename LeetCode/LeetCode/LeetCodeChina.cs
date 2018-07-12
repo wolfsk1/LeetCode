@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace LeetCode
 {
@@ -160,8 +161,108 @@ namespace LeetCode
             return new int[]{0,0};
         }
         // 7
-        public int Reverse(int x) {
+        public static int Reverse(int x)
+        {
+            int symolNum = x<0?-1:1;
+            int result = 0;
+            while (x != 0)
+            {
+                if (Int32.MaxValue / 10 < result || Int32.MinValue/10>result)
+                {
+                    return 0;
+                }
+                else
+                {
+                    result *= 10;
+                }
+                int num = x % 10;
+                if (symolNum > 0)
+                {
+                    if (Int32.MaxValue - result < num)
+                    {
+                        return 0;
+                    }
+                }
+                else
+                {
+                    if (Int32.MinValue - result > num)
+                    {
+                        return 0;
+                    }
+                }
+                result += num;
+                x /= 10;
+            }
+            return result;
+
+        }
         
+        public int MaxIncreaseKeepingSkyline(int[][] grid)
+        {
+            int[] xHeight = new int[grid.Length];
+            int[] yHeight = new int[grid.Length];
+            for (int i = 0; i < grid.Length; i++)
+            {
+                for (int j = 0; j < grid.Length; j++)
+                {
+                    xHeight[i] = Math.Max(grid[i][j], xHeight[i]);
+                    yHeight[j] = Math.Max(grid[i][j], yHeight[j]);
+                }
+            }
+
+            int result = 0;
+            for (int i = 0; i < grid.Length; i++)
+            {
+                for (int j = 0; j < grid.Length; j++)
+                {
+                        result += Math.Min(xHeight[i], yHeight[j]) - grid[i][j];
+                }
+            }
+
+            return result;
+        }
+        
+        public double FindMedianSortedArrays(int[] nums1, int[] nums2)
+        {
+            int totalLength = nums1.Length + nums2.Length;
+            int midLength = totalLength / 2 +1;
+            int[] newResult = new int[midLength];
+            int n1Index = 0;
+            int n2Index = 0;
+            for (int i = 0; i < newResult.Length; i++)
+            {
+                if (n1Index >= nums1.Length)
+                {
+                    newResult[i] = nums2[n2Index];
+                    n2Index++;
+                    continue;
+                }else if (n2Index >= nums2.Length)
+                {
+                    newResult[i] = nums1[n1Index];
+                    n1Index++;
+                    continue;
+                }
+                bool isN1Smaller = nums1[n1Index] <= nums2[n2Index];
+                if (isN1Smaller)
+                {
+                    newResult[i] = nums1[n1Index];
+                    n1Index++;
+                }
+                else
+                {
+                    newResult[i] = nums2[n2Index];
+                    n2Index++;
+                }
+            }
+
+            if (totalLength % 2 == 0)
+            {
+                return (newResult[newResult.Length - 2] + newResult[newResult.Length - 1]) / 2.0d;
+            }
+            else
+            {
+                return (newResult[newResult.Length - 1]);
+            }
         }
     }
 }
