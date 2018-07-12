@@ -11,8 +11,7 @@ namespace LeetCode
     {
         static void Main(string[] args)
         {
-            LeetCodeChina.Rotate(new int[2]{1,2},1);
-
+            LeetCodeChina.MoveZeroes(new int[8]{1,0,2,0,3,4,5,6});
         }
     }
 }
