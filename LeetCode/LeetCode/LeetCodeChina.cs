@@ -335,5 +335,33 @@ namespace LeetCode
                 }
             }
         }
+        
+        public bool ContainsDuplicate(int[] nums) {
+            HashSet<int> judge = new HashSet<int>();
+            for (int i = 0; i < nums.Length; i++)
+            {
+                if (judge.Contains(nums[i]))
+                {
+                    return true;
+                }
+                else
+                {
+                    judge.Add(nums[i]);
+                }
+            }
+
+            return false;
+        }
+        
+        public int SingleNumber(int[] nums)
+        {
+            int judge = nums[0];
+            for (int i = 1; i < nums.Length; i++)
+            {
+                judge = nums[i] ^ judge;
+            }
+
+            return judge;
+        }
     }
 }
