@@ -221,11 +221,11 @@ namespace LeetCode
 
             return result;
         }
-        
+
         public double FindMedianSortedArrays(int[] nums1, int[] nums2)
         {
             int totalLength = nums1.Length + nums2.Length;
-            int midLength = totalLength / 2 +1;
+            int midLength = totalLength/2 + 1;
             int[] newResult = new int[midLength];
             int n1Index = 0;
             int n2Index = 0;
@@ -236,7 +236,8 @@ namespace LeetCode
                     newResult[i] = nums2[n2Index];
                     n2Index++;
                     continue;
-                }else if (n2Index >= nums2.Length)
+                }
+                else if (n2Index >= nums2.Length)
                 {
                     newResult[i] = nums1[n1Index];
                     n1Index++;
@@ -255,13 +256,83 @@ namespace LeetCode
                 }
             }
 
-            if (totalLength % 2 == 0)
+            if (totalLength%2 == 0)
             {
-                return (newResult[newResult.Length - 2] + newResult[newResult.Length - 1]) / 2.0d;
+                return (newResult[newResult.Length - 2] + newResult[newResult.Length - 1])/2.0d;
             }
             else
             {
                 return (newResult[newResult.Length - 1]);
+            }
+        }
+
+        public static
+            int RemoveDuplicates(int[] nums)
+        {
+            if (nums.Length == 0)
+            {
+                return 0;
+            }
+            int realNumIndex = 0;
+            int numsIndex = 0;
+            while (numsIndex < nums.Length-1)
+            {
+                if (nums[numsIndex] != nums[numsIndex + 1])
+                {
+                    nums[realNumIndex] = nums[numsIndex];
+                    realNumIndex++;
+                }
+                numsIndex++;
+            }
+
+            nums[realNumIndex] = nums[numsIndex];
+            return realNumIndex + 1;
+        }
+        
+        public int MaxProfit(int[] prices)
+        {
+            if (prices.Length == 0)
+            {
+                return 0;
+            }
+            int result = 0;
+            int minNum = prices[0];
+            int lastNum = prices[0];
+            for (int i = 1; i < prices.Length; i++)
+            {
+                if (prices[i] < lastNum)
+                {
+                    result += lastNum - minNum;
+                    minNum = prices[i];
+                }
+                lastNum = prices[i];
+            }
+
+            result += lastNum - minNum;
+            return result;
+        }
+        
+        public static void Rotate(int[] nums, int k)
+        {
+            if (nums.Length == 0)
+            {
+                return;
+            }
+            // 需要交换区域的长度
+            int n = nums.Length;
+            // 交换区域的初始位置
+            int start = 0;
+            // 每轮的交换
+            for (;(k%=n)!=0;n-=k,start+=k)
+            {
+                for (int i = 0; i < k; i++)
+                {
+                    int orginIndex = i + start;
+                    int targetIndex = n - k + i + start;
+                    int temp = nums[orginIndex];
+                    nums[orginIndex] = nums[targetIndex];
+                    nums[targetIndex] = temp;
+                }
             }
         }
     }

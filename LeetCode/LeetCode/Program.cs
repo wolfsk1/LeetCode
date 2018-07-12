@@ -11,9 +11,8 @@ namespace LeetCode
     {
         static void Main(string[] args)
         {
+            LeetCodeChina.Rotate(new int[2]{1,2},1);
 
-            var result = LeetCodeChina.Reverse(-321);
-            Console.WriteLine(result);
         }
     }
 }
