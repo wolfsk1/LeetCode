@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlTypes;
+using System.Text;
 
 namespace LeetCode
 {
@@ -362,6 +364,218 @@ namespace LeetCode
             }
 
             return judge;
+        }
+        
+        public void Rotate(int[,] matrix)
+        {
+            int n = matrix.GetLength(0);
+            for (int i = 0; i < n / 2; i++)
+            {
+                for (int j = i; j < n - i - 1; j++)
+                {
+                    int temp = matrix[i, j];
+                    matrix[i, j] = matrix[n - j - 1, i];
+                    matrix[n - j - 1, i] = matrix[n - i - 1, n - j - 1];
+                    matrix[n - i - 1, n - j - 1] = matrix[j, n - i - 1];
+                    matrix[j, n - i - 1] = temp;
+                }
+            }
+        }
+        
+        public string ReverseString(string s)
+        {
+            var cs = s.ToCharArray();
+            for (int i = 0; i < cs.Length / 2; i++)
+            {
+                char temp = cs[i];
+                cs[i] = cs[cs.Length - i - 1];
+                cs[cs.Length - i - 1] = temp;
+            }
+            return new string(cs);
+        }
+        
+        public int FirstUniqChar(string s)
+        {
+            int[] judge = new int[26];
+            for (int i = 0; i < judge.Length; i++)
+            {
+                judge[i] = -2;
+            }
+
+            var cs = s.ToCharArray();
+            for (int i = 0; i < cs.Length; i++)
+            {
+                int curCharInt = cs[i] - 'a';
+                if (judge[curCharInt] == -2)
+                {
+                    judge[curCharInt] = i;
+                }
+                else if(judge[curCharInt]>=0)
+                {
+                    judge[curCharInt] = -1;
+                }
+            }
+            int min = Int32.MaxValue;
+            for (int i = 0; i < judge.Length; i++)
+            {
+                if (judge[i] >= 0)
+                {
+                    min = Math.Min(judge[i], min);
+                }
+            }
+
+            return min == Int32.MaxValue ? -1 : min;
+        }
+        
+        public bool IsAnagram(string s, string t) {
+            int[] judge = new int[26];
+            char[] cs = s.ToCharArray();
+            for (int i = 0; i < cs.Length; i++)
+            {
+                int charInt = cs[i] - 'a';
+                judge[charInt]++;
+            }
+
+            var ts = t.ToCharArray();
+            for (int i = 0; i < ts.Length; i++)
+            {
+                int charInt = ts[i] - 'a';
+                judge[charInt]--;
+            }
+
+            for (int i = 0; i < judge.Length; i++)
+            {
+                if (judge[i] != 0)
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+        
+        public bool IsPalindrome(string s)
+        {
+            s = s.ToLower();
+            var cs = s.ToCharArray();
+            int l = FindNextCharWithIsPalindrome(cs, 0, true);
+            int r = FindNextCharWithIsPalindrome(cs, s.Length - 1, false);
+            while (l < r)
+            {
+                if (cs[l] != cs[r])
+                {
+                    return false;
+                }
+
+                l = FindNextCharWithIsPalindrome(cs, l + 1, true);
+                r = FindNextCharWithIsPalindrome(cs, r - 1, false);
+            }
+
+            return true;
+        }
+
+        private int FindNextCharWithIsPalindrome(char[] array, int index, bool isToRight)
+        {
+            int additionalIndex = isToRight ? 1 : -1;
+            while (index >= 0 && index < array.Length)
+            {
+                char curc = array[index];
+                if ((curc >= 'a' && curc <= 'z') || (curc >= '0' && curc <= '9'))
+                {
+                    break;
+                }
+                else
+                {
+                    index += additionalIndex;
+                }
+            }
+
+            return index;
+        }
+
+        public static int MyAtoi(string str)
+        {
+            var cstr = str.ToCharArray();
+            List<int> resultInts = new List<int>();
+            bool isAdditional = true;
+            bool meetNoNull = false;
+            for (int i = 0; i < cstr.Length; i++)
+            {
+                var c = cstr[i];
+                if (c == ' ' && !meetNoNull) continue;
+                if (meetNoNull)
+                {
+                    if (c < '0' || c > '9')
+                        break;
+                    else
+                    {
+                        resultInts.Add(c - '0');
+                    }
+                }
+                else
+                {
+                    if (c == '+' || c == '-')
+                    {
+                        isAdditional = c == '+';
+                    }
+                    else if (c >= '0' && c <= '9')
+                    {
+                        resultInts.Add(c-'0');
+                    }
+                    else
+                    {
+                        break;
+                    }
+
+                    meetNoNull = true;
+                }
+            }
+
+            if (resultInts.Count == 0) return 0;
+            int additional = isAdditional ? 1 : -1;
+            int result = resultInts[0] * additional;
+            for (int i = 1; i < resultInts.Count; i++)
+            {
+                int curInt = resultInts[i];
+                if (Int32.MaxValue / 10 < result)
+                {
+                    return Int32.MaxValue;
+                }
+                else if (Int32.MinValue / 10 > result)
+                {
+                    return Int32.MinValue;
+                }
+                else
+                {
+                    result *= 10;
+                }
+
+                if (isAdditional)
+                {
+                    if (Int32.MaxValue - curInt < result)
+                    {
+                        return Int32.MaxValue;
+                    }
+                    else
+                    {
+                        result += curInt;
+                    }
+                }
+                else
+                {
+                    if (Int32.MinValue + curInt > result)
+                    {
+                        return Int32.MinValue;
+                    }
+                    else
+                    {
+                        result -= curInt;
+                    }
+                }
+
+            }
+
+            return result;
         }
     }
 }

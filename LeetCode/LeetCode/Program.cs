@@ -11,7 +11,7 @@ namespace LeetCode
     {
         static void Main(string[] args)
         {
-            LeetCodeChina.Rotate(new int[2]{1,2},1);
+            LeetCodeChina.MyAtoi("42");
 
         }
     }
