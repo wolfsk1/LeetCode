@@ -520,7 +520,7 @@ namespace LeetCode
                     }
                     else if (c >= '0' && c <= '9')
                     {
-                        resultInts.Add(c-'0');
+                        resultInts.Add(c - '0');
                     }
                     else
                     {
@@ -533,15 +533,15 @@ namespace LeetCode
 
             if (resultInts.Count == 0) return 0;
             int additional = isAdditional ? 1 : -1;
-            int result = resultInts[0] * additional;
+            int result = resultInts[0]*additional;
             for (int i = 1; i < resultInts.Count; i++)
             {
                 int curInt = resultInts[i];
-                if (Int32.MaxValue / 10 < result)
+                if (Int32.MaxValue/10 < result)
                 {
                     return Int32.MaxValue;
                 }
-                else if (Int32.MinValue / 10 > result)
+                else if (Int32.MinValue/10 > result)
                 {
                     return Int32.MinValue;
                 }
@@ -576,6 +576,151 @@ namespace LeetCode
             }
 
             return result;
+        }
+
+        public int[] Intersect(int[] nums1, int[] nums2) {
+            Dictionary<int, int> judge = new Dictionary<int, int>();
+            List<int> result = new List<int>();
+            for(int i = 0;i <nums1.Length;i++)
+            {
+                if (!judge.ContainsKey(nums1[i]))
+                {
+                    judge.Add(nums1[i], 1);
+                }
+                else
+                {
+                    judge[nums1[i]]++;
+                }
+            }
+
+            for (int i = 0; i < nums2.Length; i++)
+            {
+                if (judge.ContainsKey(nums2[i]))
+                {
+                    judge[nums2[i]]--;
+                    result.Add(nums2[i]);
+                    if (judge[nums2[i]] == 0)
+                    {
+                        judge.Remove(nums2[i]);
+                    }
+                }
+            }
+
+            return result.ToArray();
+        }
+        
+        public static int[] PlusOne(int[] digits) {
+            if (digits.Length == 0)
+            {
+                return digits;
+            }
+
+            digits[digits.Length - 1]++;
+            bool needAdd = false;
+            for (int i = digits.Length - 1; i >= 0; i--)
+            {
+                if (needAdd)
+                {
+                    digits[i]++;
+                }
+                needAdd = digits[i] >= 10; 
+                if (needAdd)
+                {
+                    digits[i] -= 10;
+                }
+                else
+                {
+                    break;
+                }
+                
+            }
+
+            int[] result;
+            if (needAdd)
+            {
+                result = new int[digits.Length+1];
+                Array.Copy(digits,0, result, 1, digits.Length);
+                result[0] = 1;
+            }
+            else
+            {
+                result = digits;
+            }
+
+            return result;
+        }
+        
+        public static void MoveZeroes(int[] nums)
+        {
+            int zeroStart = -1;
+            int i = 0;
+            while (i < nums.Length - 1)
+            {
+                
+                if (nums[i] == 0)
+                {
+                    if (zeroStart == -1) zeroStart = i;
+                    if (nums[i + 1] != 0)
+                    {
+                        nums[zeroStart] = nums[i + 1];
+                        nums[i + 1] = 0;
+                        zeroStart++;
+                    }
+                }
+
+                i++;
+            }
+        }
+        
+        public bool IsValidSudoku(char[,] board) {
+            HashSet<int>[] squadSet = new HashSet<int>[9];
+            HashSet<int>[] colSet = new HashSet<int>[9];
+            HashSet<int>[] lineSet = new HashSet<int>[9];
+            for (int i = 0; i < 9; i++)
+            {
+                squadSet[i] = new HashSet<int>();
+                colSet[i] = new HashSet<int>();
+                lineSet[i] = new HashSet<int>();
+            }
+            for (int i = 0; i < board.GetLength(0); i++)
+            {
+                for (int j = 0; j < board.GetLength(1); j++)
+                {
+                    char cur = board[i, j];
+                    if(cur == '.') continue;
+                    int curInt = cur - '0';
+                    int sqadIndex = i / 3 * 3 + j/3;
+                    if (squadSet[sqadIndex].Contains(curInt))
+                    {
+                        return false;
+                    }
+                    else
+                    {
+                        squadSet[sqadIndex].Add(curInt);
+                    }
+
+                    int colIndex = j;
+                    if (colSet[j].Contains(curInt))
+                    {
+                        return false;
+                    }
+                    else
+                    {
+                        colSet[j].Add(curInt);
+                    }
+
+                    int lineIndex = i;
+                    if (lineSet[i].Contains(curInt))
+                    {
+                        return false;
+                    }
+                    else
+                    {
+                        lineSet[i].Add(curInt);
+                    }
+                }
+            }
+            return true;
         }
     }
 }

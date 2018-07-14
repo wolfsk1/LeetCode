@@ -13,6 +13,7 @@ namespace LeetCode
         {
             LeetCodeChina.MyAtoi("42");
 
+            LeetCodeChina.MoveZeroes(new int[8]{1,0,2,0,3,4,5,6});
         }
     }
 }
