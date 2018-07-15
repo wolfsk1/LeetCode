@@ -11,9 +11,9 @@ namespace LeetCode
     {
         static void Main(string[] args)
         {
-            LeetCodeChina.MyAtoi("42");
-
-            LeetCodeChina.MoveZeroes(new int[8]{1,0,2,0,3,4,5,6});
+            LeetCodeChina lcc = new LeetCodeChina();
+            var isR = lcc.IsRectangleOverlap(new[] {0,0,1,1}, new[] {1,0,2,1});
+            //LeetCodeChina.MoveZeroes(new int[8]{1,0,2,0,3,4,5,6});
         }
     }
 }
