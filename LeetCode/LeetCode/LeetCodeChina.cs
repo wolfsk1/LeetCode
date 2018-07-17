@@ -997,5 +997,91 @@ namespace LeetCode
                 treeStruct[i].Length = treeStruct[i * 2 + 1].Length + treeStruct[i * 2 + 2].Length;
             }
         }
+        
+        public void DeleteNode(ListNode node)
+        {
+            var nextNode = node.next;
+            node.val = nextNode.val;
+            node.next = nextNode.next;
+        }
+        
+        public ListNode RemoveNthFromEnd(ListNode head, int n)
+        {
+            var nthNode = head;
+            for (int i = 0; i < n; i++)
+            {
+                nthNode = nthNode.next;
+            }
+
+            if (nthNode == null)
+            {
+                return head.next;
+            }
+            var currentNode = head;
+            while (nthNode.next != null)
+            {
+                currentNode = currentNode.next;
+                nthNode = nthNode.next;
+            }
+            
+            currentNode.next = currentNode.next.next;
+            return head;
+        }
+        
+        public ListNode ReverseList(ListNode head)
+        {
+            if (head == null)
+            {
+                return null;
+            }
+            var currentNode = head;
+            var nextNode = head.next;
+            while (nextNode != null)
+            {
+                var tempNode = nextNode.next;
+                nextNode.next = currentNode;
+                currentNode = nextNode;
+                nextNode = tempNode;
+            }
+
+            head.next = null;
+            return currentNode;
+        }
+
+        public ListNode MergeTwoLists(ListNode l1, ListNode l2)
+        {
+            ListNode head = null;
+            ListNode currentNode = null;
+            while (l1!=null || l2!=null)
+            {
+                if (l1 == null)
+                {
+                    currentNode = l2;
+                    l2 = l2.next;
+                }else if (l2 == null)
+                {
+                    currentNode = l1;
+                    l1 = l1.next;
+                }
+                else if(l1.val<=l2.val)
+                {
+                    currentNode = l1;
+                    l1 = l1.next;
+                }
+                else
+                {
+                    currentNode = l2;
+                    l2 = l2.next;
+                }
+
+                if (head == null)
+                {
+                    head = currentNode;
+                }
+                currentNode = currentNode.next;
+            }
+
+            return head;
+        }
     }
 }
